@@ -67,8 +67,3 @@ plugin "docker" {
     }
   }
 }' > client2.hcl
-
-mkdir /tmp/client1
-mkdir /tmp/client2
-#nomad agent -config client1.hcl
-#nomad agent -config client2.hcl
