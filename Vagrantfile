@@ -1,23 +1,20 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-VAGRANTFILE_API_VERSION = "2"
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-
+Vagrant.configure("2") do |config|
+  
+  #standaard lijn voor box te setten
   config.vm.box = "centos/7"
-  config.vm.hostname = "nomad"
-
-  config.vm.provider :virtualbox do |virtualbox, override|
-    virtualbox.customize ["modifyvm", :id, "--memory", 2048]
+  config.vm.provision "shell", path: "scriptinstall.sh"
+  config.vm.define "server" do |server|
+	server.vm.hostname = "server"
+	server.vm.provision "shell", path: "scriptserver.sh"
   end
 
-  config.vm.provider :lxc do |lxc, override|
-    override.vm.box = "visibilityspots/centos-7.x-minimal"
+  config.vm.define "agent1" do |agent1|
+	agent1.vm.hostname = "agent1"
+	agent1.vm.provision "shell", path: "scriptagent.sh"
   end
-
-  config.vm.provision "shell",
-    inline: "whoami"
-
-  config.vm.provision "shell", path: "script.sh"
-  config.vm.provision "shell", path: "scripts/update.sh"
-
+  
+  config.vm.define "agent2" do |agent2|
+	agent2.vm.hostname = "agent2"
+	agent2.vm.provision "shell", path: "scriptagent.sh"
+  end
 end
