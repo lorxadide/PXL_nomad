@@ -3,7 +3,7 @@ log_level = "DEBUG"
 
 # Setup data dir
 data_dir = "/tmp/server1"
-bind_addr = 192.168.1.2
+bind_addr = "192.168.1.2"
 
 # Enable the server
 server {
@@ -12,8 +12,7 @@ server {
     # Self-elect, should be 3 or 5 for production
     bootstrap_expect = 1
 }' > /etc/nomad.d/nomad.hcl
-
-export NOMAD_ADDR=192.168.1.2:4646
+systemctl restart nomad
 
 echo 'job "webserver" {
   datacenters = ["dc1"]

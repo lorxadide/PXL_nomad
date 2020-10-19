@@ -17,7 +17,7 @@ Vagrant.configure("2") do |config|
   
   config.vm.define "agent2" do |agent2|
 	agent2.vm.hostname = "agent2"
-	agent2.vm.provision "shell", path: "scriptagent.sh"
+	agent2.vm.provision "shell", path: "scriptagent2.sh"
 	agent2.vm.network "private_network", ip: "192.168.1.4", virtualbox__intnet: "mynetwork"
   end
 end
