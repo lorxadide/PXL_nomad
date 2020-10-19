@@ -2,10 +2,10 @@ echo '# Increase log verbosity
 log_level = "DEBUG"
 
 # Setup data dir
-data_dir = "/tmp/client1"
-bind_addr = 192.168.1.3
+data_dir = "/tmp/client2"
+bind_addr = 192.168.1.4
 # Give the agent a unique name. Defaults to hostname
-name = "client1"
+name = "client2"
 
 # Enable the client
 client {
@@ -19,7 +19,7 @@ client {
 
 # Modify our port to avoid a collision with server1
 ports {
-    http = 5656
+    http = 5657
 }
 
 # Disable the dangling container cleanup to avoid interaction with other clients
