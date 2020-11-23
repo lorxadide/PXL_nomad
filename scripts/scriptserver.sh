@@ -14,13 +14,10 @@ server {
 systemctl restart nomad
 
 echo '
-network_interface = "eth1"
-
-server {
-	enabled = true
-	
-	bootstrap_expect = 1
-}' > /etc/consul.d/consul.hcl
+bind_addr = "eth1"
+server = true
+bootstrap_expect = 1
+' >> /etc/consul.d/consul.hcl
 systemctl restart consul
 
 echo 'job "webserver" {
