@@ -13,6 +13,16 @@ server {
 }' > /etc/nomad.d/nomad.hcl
 systemctl restart nomad
 
+echo '
+network_interface = "eth1"
+
+server {
+	enabled = true
+	
+	bootstrap_expect = 1
+}' > /etc/consul.d/consul.hcl
+systemctl restart consul
+
 echo 'job "webserver" {
   datacenters = ["dc1"]
   type = "service"

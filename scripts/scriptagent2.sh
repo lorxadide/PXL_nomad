@@ -27,3 +27,13 @@ plugin "docker" {
   }
 }' > /etc/nomad.d/nomad.hcl
 systemctl restart nomad
+
+echo '
+network_interface="eth1"
+
+client {
+	enabled=true
+	
+	servers=[192.168.1.2:8600]
+}' > /etc/consul.d/consul.hcl
+systemctl restart consul
