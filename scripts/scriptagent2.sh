@@ -2,8 +2,7 @@ echo '# Increase log verbosity
 log_level = "DEBUG"
 
 # Setup data dir
-data_dir = "/tmp/client2"
-bind_addr = "192.168.1.4"
+network_interface = "eth1"
 # Give the agent a unique name. Defaults to hostname
 name = "client2"
 
@@ -15,11 +14,6 @@ client {
     # this should be like "nomad.service.consul:4647" and a system
     # like Consul used for service discovery.
     servers = ["192.168.1.2:4647"]
-}
-
-# Modify our port to avoid a collision with server1
-ports {
-    http = 5657
 }
 
 # Disable the dangling container cleanup to avoid interaction with other clients

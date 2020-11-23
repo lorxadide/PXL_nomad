@@ -2,7 +2,6 @@ echo '# Increase log verbosity
 log_level = "DEBUG"
 
 # Setup data dir
-data_dir = "/tmp/server1"
 network_interface = "eth1"
 
 # Enable the server
