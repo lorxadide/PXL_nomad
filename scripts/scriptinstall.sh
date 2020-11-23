@@ -10,5 +10,3 @@ systemctl enable nomad
 systemctl enable consul
 systemctl enable docker
 systemctl start docker
-systemctl start nomad
-systemctl start consul

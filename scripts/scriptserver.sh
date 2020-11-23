@@ -3,7 +3,7 @@ log_level = "DEBUG"
 
 # Setup data dir
 data_dir = "/tmp/server1"
-bind_addr = "192.168.1.2"
+network_interface = "eth1"
 
 # Enable the server
 server {
