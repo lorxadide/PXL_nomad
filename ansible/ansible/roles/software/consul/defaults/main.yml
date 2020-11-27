@@ -1,0 +1,15 @@
+---
+consul_version: 0.8.3
+consul_archive: "consul_{{ consul_version }}_linux_amd64.zip"
+consul_download: "https://releases.hashicorp.com/consul/{{ consul_version }}/{{ consul_archive }}"
+consul_checksum: sha256:f894383eee730fcb2c5936748cc019d83b220321efd0e790dae9a3266f5d443a
+consul_download_folder: /tmp
+
+consul_home: /opt/consul
+consul_config_dir: /etc/consul.d
+consul_config_file: /etc/consul.conf
+consul_log_file: /var/log/consul
+consul_data_dir: "{{ consul_home }}/data"
+
+consul_user: consul
+consul_group: consul

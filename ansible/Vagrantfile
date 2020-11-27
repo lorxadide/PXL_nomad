@@ -8,16 +8,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         config.vm.box_check_update = false
         config.vm.synced_folder ".", "/ansible", disabled: true
 
-
-        # - configure some parameters from the virtualbox provider
         config.vm.provider "virtualbox" do |v|
                 v.memory = 512
                 v.cpus = 1
         end
 
-
         config.vm.provision "ansible" do |ansible|
-                ansible.playbook = "ansible/plays/docker.yml"
+                ansible.playbook = "ansible/plays/all.yml"
                 ansible.config_file = "ansible/ansible.cfg"
         end
 end
