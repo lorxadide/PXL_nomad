@@ -35,7 +35,6 @@
   get_url:
     url: "{{ consul_download }}"
     dest: "{{ consul_download_folder }}"
-    checksum: "{{ consul_checksum }}"
   register: consul_was_downloaded
 
 - name: Copy and unpack
@@ -86,38 +85,8 @@
     recurse: yes
   when: consul_was_downloaded|changed
 
-- name: Set consul environment variables
-  template:
-    src: consul.env.j2
-    dest: /etc/profile.d/consul.sh
-    owner: root
-    group: root
-    mode: 0644
-
-- name: Install consul config
-  template:
-    src: consul.json.j2
-    dest: "{{ consul_config_file }}"
-    owner: "{{ consul_user }}"
-    group: "{{ consul_group }}"
-    mode: 0600
-  notify:
-    - Restart consul
-
-- name: Create consul systemd service
-  template:
-    src: systemd.service.j2
-    dest: /etc/systemd/system/consul.service
-    owner: root
-    group: root
-    mode: 0644
-  register: consul_systemd_service
-
-- name: Ensure consul is started and enabled at boot
-  systemd:
-    name: consul
-    state: started
-    enabled: yes
-    daemon_reload: yes
-  when: >
-    consul_systemd_service|changed
+- name: unarchive
+  unarchive:
+    src: "/tmp/{{ consul_archive }}"
+    dest: "/usr/bin"
+    remote_src: yes

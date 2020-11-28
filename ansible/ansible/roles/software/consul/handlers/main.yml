@@ -1,8 +1,4 @@
 ---
-- name: Reload consul
-  become: yes
-  command: pkill -1 consul
-
 - name: Restart consul
   service:
     name: consul
