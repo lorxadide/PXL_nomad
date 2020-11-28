@@ -4,20 +4,8 @@
     name: "{{ item }}"
     state: installed
   with_items:
-    - python-pip
     - bind-utils
     - unzip
-    - jq
-
-- name: Ensure python-based dependencies are installed
-  pip:
-    name: "{{ item }}"
-    state: latest
-  with_items:
-    - pip
-    - pyhcl
-    - python-consul
-    - backports.ssl-match-hostname
 
 - name: Create consul group
   group:
