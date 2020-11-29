@@ -5,3 +5,4 @@
   roles:
     - 'software/docker'
     - 'software/consul'
+    - 'software/nomad'
