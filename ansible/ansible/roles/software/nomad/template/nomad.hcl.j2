@@ -1,0 +1,44 @@
+log_level = "DEBUG"
+
+data_dir = "{{ nomad__data_dir }}"
+bind_addr = "{{ ansible_eth1.ipv4.address }}"
+
+
+{% if nomad__server == "true" -%}
+# enable the server
+advertise {
+  # Defaults to the first private IP address.
+  http = "{{ ansible_eth1.ipv4.address }}"
+  rpc  = "{{ ansible_eth1.ipv4.address }}"
+  serf = "{{ ansible_eth1.ipv4.address }}"
+} 
+server {
+    enabled = {{nomad__server}}
+
+    #self-elect
+   
+    bootstrap_expect = 1    
+}
+
+{% else -%}
+
+name = "{{ inventory_hostname_short }}"
+
+client {
+        enabled = true
+                servers = ["{{ nomad__server_addr }}"]
+        network_interface = "eth1"
+}
+ports {
+        http = 5656 
+}
+plugin "docker" {
+        config{
+                gc {
+                        dangling_containers {
+                                enabled=false
+                        }
+                }
+        }
+}
+{% endif -%}
