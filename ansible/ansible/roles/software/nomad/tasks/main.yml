@@ -22,42 +22,16 @@
     url: "{{ nomad_checksum_url }}"
     dest: "{{ nomad_install_dir }}/{{ nomad_checksum_file }}"
 
-- name: write hashicorp gpg key file
-  copy:
-    src: hashicorp.asc
-    dest: /etc/hashicorp.asc
-    owner: root
-    group: root
-    mode: 0644
-  when: nomad_verify_checksum_signature | bool
-
-- name: import hashicorp gpg key
-  command: gpg --import  /etc/hashicorp.asc
-  changed_when: false
-  when: nomad_verify_checksum_signature | bool
-
 - name: download nomad checksum signature file
   get_url:
     url: "{{ nomad_signature_url }}"
     dest: "{{ nomad_install_dir }}/{{ nomad_signature_file }}"
   when: nomad_verify_checksum_signature | bool
 
-- name: verify checksum file
-  command: gpg --batch --verify {{ nomad_install_dir }}/{{ nomad_signature_file }} {{ nomad_install_dir }}/{{ nomad_checksum_file }}
-  changed_when: false
-  when: nomad_verify_checksum_signature | bool
-
-- name: get checksum of nomad zip
-  command: grep {{ nomad_zip }} {{ nomad_install_dir }}/{{ nomad_checksum_file }}
-  register: nomad_checksum
-  check_mode: false
-  changed_when: false
-
 - name: download nomad zip
   get_url:
     url: "{{ nomad_zip_url }}"
     dest: "{{ nomad_install_dir }}/{{ nomad_zip }}"
-    checksum: "sha256:{{ nomad_checksum.stdout.split(' ') | first }}"
 
 - name: extract nomad zip
   unarchive:
@@ -108,16 +82,6 @@
     owner: "{{ nomad_user }}"
     group: "{{ nomad_group }}"
     mode: 0750
-
-- name: write config file
-  template:
-    src: "{{ nomad_config_template }}"
-    dest: "{{ nomad_conf_dir }}/config.json"
-    owner: "{{ nomad_user }}"
-    group: "{{ nomad_group }}"
-    mode: 0640
-  notify:
-    - restart nomad
 
 - name: systemd unit file
   template:
