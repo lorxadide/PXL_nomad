@@ -1,15 +1,15 @@
 ---
-- name: install epel
+- name: Install epel
   yum:
     name: epel-release
     state: installed
 
-- name: install unzip
+- name: Install unzip
   package:
     name: unzip
     state: present
 
-- name: ensure nomad directories
+- name: Ensure nomad directories
   file:
     state: directory
     path: "{{ item }}"
@@ -18,23 +18,23 @@
     - "{{ nomad_bin_dir }}"
     - /etc/nomad.d/
 
-- name: download nomad checksum file
+- name: Download nomad checksum file
   get_url:
     url: "{{ nomad_checksum_url }}"
     dest: "{{ nomad_install_dir }}/{{ nomad_checksum_file }}"
 
-- name: download nomad checksum signature file
+- name: Download nomad checksum signature file
   get_url:
     url: "{{ nomad_signature_url }}"
     dest: "{{ nomad_install_dir }}/{{ nomad_signature_file }}"
   when: nomad_verify_checksum_signature | bool
 
-- name: download nomad zip
+- name: Download nomad zip
   get_url:
     url: "{{ nomad_zip_url }}"
     dest: "{{ nomad_install_dir }}/{{ nomad_zip }}"
 
-- name: extract nomad zip
+- name: Extract nomad zip
   unarchive:
     src: "{{ nomad_install_dir }}/{{ nomad_zip }}"
     dest: "{{ nomad_install_dir }}"
@@ -45,20 +45,20 @@
     mode: 0755
   notify: restart nomad
 
-- name: symlink nomad binary
+- name: Symlink nomad binary
   file:
     state: link
     src: "{{ nomad_install_dir }}/nomad"
     dest: "{{ nomad_bin_dir }}/nomad"
   notify: restart nomad
 
-- name: create service group
+- name: Create service group
   group:
     name: "{{ nomad_group }}"
     system: true
   when: nomad_user_managed | bool
 
-- name: create service user
+- name: Create service user
   user:
     name: "{{ nomad_user }}"
     group: "{{ nomad_group }}"
@@ -68,7 +68,7 @@
     comment: Nomad service user
   when: nomad_user_managed | bool
 
-- name: create conf directory
+- name: Create conf directory
   file:
     state: directory
     path: "{{ nomad_conf_dir }}"
@@ -76,7 +76,7 @@
     group: "{{ nomad_group }}"
     mode: "{{ nomad_conf_dir_mode }}"
 
-- name: create data directory
+- name: Create data directory
   file:
     state: directory
     path: "{{ nomad_data_dir }}"
@@ -84,7 +84,7 @@
     group: "{{ nomad_group }}"
     mode: 0750
 
-- name: systemd unit file
+- name: Systemd unit file
   template:
     src: "{{ nomad_systemd_template }}"
     dest: /etc/systemd/system/nomad.service
@@ -95,13 +95,13 @@
     - reload systemd
     - restart nomad
 
-- name: manage nomad service
+- name: Manage nomad service
   service:
     name: nomad
     state: "{{ nomad_service_state }}"
     enabled: "{{ nomad_service_enabled }}"
 
-- name: hcl file for nomad
+- name: Hcl file for nomad
   blockinfile:
     path: /etc/nomad.d/nomad.hcl
     block:

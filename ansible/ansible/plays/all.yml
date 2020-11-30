@@ -1,4 +1,18 @@
 ---
+#- hosts: all
+#tasks:
+#- name: install needed tools
+#become: true
+#become_user: root
+#yum:
+#state: present
+#name:
+#- zip
+#- unzip
+#- epel-release
+#- bind-utils
+#- vim
+
 - hosts: 'server'
   become: true
   any_errors_fatal: true

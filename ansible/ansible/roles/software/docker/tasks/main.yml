@@ -32,19 +32,19 @@
     state: "{{ docker_service_state }}"
     enabled: "{{ docker_service_enabled }}"
 
-- name: 'prepare default daemon configuration'
+- name: Prepare default daemon configuration
   copy:
     src: 'daemon.json'
     dest: '/etc/docker/daemon.json'
 
-- name: 'set periodic docker system prune'
+- name: Set periodic docker system prune
   cron:
     name: 'docker-prune'
     minute: '0'
     hour: '*/2'
     job: 'docker container prune -f'
 
-- name: 'add users to docker group'
+- name: Add users to docker group
   user:
     name: '{{ item }}'
     groups: 'docker'
