@@ -26,6 +26,7 @@ Once it is finished, you should be able to connect to the vagrant environment th
     [vagrant@nomad ~]$
 ```
 
+Opdracht 1:
 Wij (Koen en Robin, team 6) hebben samen op 1 pc gewerkt aan deze opdracht, namelijk Koen zijn pc. Wij zijn begonnen met Robin zijn documentatie te raadplegen die hij gemaakt heeft tijdens de lessen, maar dit bleek achteraf voor de manuele installatie te zijn. Na hulp van de leerkracht hebben we op nomad.io en consul.io de juiste handleiding gevonden, deze hebben we gevolgd en uiteindelijk werkte dit ook.
 Wij zijn een aantal fouten tegengekomen, maar dit waren meestal kleine syntax-foutjes zoals quotes vergeten of een spatie te veel of dergelijke.
 Na de eerste dag kwamen wij een fout tegen die we maar niet opgelost kregen, namelijk "connection refused" en "address already in use". Deze twee fouten hebben ons veel werk bezorgd en hiervoor hebben we ook vaak de hulp van meneer Collijs nodig gehad. Uiteindelijk hebben we dit, zeer kort samengevat, met het aanpassen van de bind adressen en de poorten kunnen oplossen.
@@ -39,3 +40,21 @@ Bronvermelding:
 https://learn.hashicorp.com/collections/nomad/get-started
 https://learn.hashicorp.com/collections/consul/getting-started
 
+
+Opdracht 2:
+Voor de tweede opdracht hebben we er gezamenlijk voor gekozen om te werken met Ansible. Deze keuze hebben we gemaakt omdat Koen ook in het IT project Ansible nodig heeft dus er zo meer vertrouwd mee kan geraken.
+Het was geen gemakkelijke opdracht waar we bovenop niet zo veel tijd voor hadden gekregen. We hebben veel tegenslagen gehad in de vorm van errors (SSH-fouten, fouten met vbguest, ...).
+Aan deze opdracht hebben we meer ieder individueel gewerkt. In het begin hebben we allebei voorbeelden opgezocht en dit dan gekopieerd. Hier is Robin dan mee aan de slag gegaan en is hij begonnen met "filteren".
+We hebben jammer genoeg de fout in verband met SSH er niet uitgekregen, maar we zijn ervan overtuigd dat dit niets te maken heeft met onze code, en dat onze code klopt. Deze conclusie hebben we getrokken aangezien de SSH-fout op heel willekeurige momenten voorkomt en iedere keer tijdens de uitvoering van een andere task. De hele omgeving is zelfs een paar keer volledig opgezet geraakt.
+Ik ben er zeker van dat als we fysiek, op school, konden samenwerken we dit volledig hadden kunnen oplossen!
+
+Bronvermelding:
+https://github.com/geerlingguy/ansible-role-docker
+https://ops.tips/blog/docker-ansible-role/
+https://martincarstenbach.wordpress.com/2019/04/11/ansible-tipsntricks-provision-multiple-machines-in-parallel-with-vagrant-and-ansible/
+https://computingforgeeks.com/run-ansible-playbook-with-vagrant-up/
+https://github.com/idealista/consul_role
+https://github.com/kbrebanov/ansible-nomad
+https://stackoverflow.com/questions/42038633/ansible-yum-module-pending-transactions-error
+https://stackoverflow.com/questions/31912748/how-to-run-a-particular-task-on-specific-host-in-ansible
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html
