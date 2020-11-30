@@ -1,0 +1,127 @@
+---
+- name: Install epel
+  yum:
+    name: epel-release
+    state: installed
+
+- name: Install unzip
+  package:
+    name: unzip
+    state: present
+
+- name: Ensure nomad directories
+  file:
+    state: directory
+    path: "{{ item }}"
+  with_items:
+    - "{{ nomad_install_dir }}"
+    - "{{ nomad_bin_dir }}"
+    - /etc/nomad.d/
+
+- name: Download nomad checksum file
+  get_url:
+    url: "{{ nomad_checksum_url }}"
+    dest: "{{ nomad_install_dir }}/{{ nomad_checksum_file }}"
+
+- name: Download nomad checksum signature file
+  get_url:
+    url: "{{ nomad_signature_url }}"
+    dest: "{{ nomad_install_dir }}/{{ nomad_signature_file }}"
+  when: nomad_verify_checksum_signature | bool
+
+- name: Download nomad zip
+  get_url:
+    url: "{{ nomad_zip_url }}"
+    dest: "{{ nomad_install_dir }}/{{ nomad_zip }}"
+
+- name: Extract nomad zip
+  unarchive:
+    src: "{{ nomad_install_dir }}/{{ nomad_zip }}"
+    dest: "{{ nomad_install_dir }}"
+    remote_src: true
+    creates: "{{ nomad_install_dir }}/nomad"
+    owner: root
+    group: root
+    mode: 0755
+  notify: restart nomad
+
+- name: Symlink nomad binary
+  file:
+    state: link
+    src: "{{ nomad_install_dir }}/nomad"
+    dest: "{{ nomad_bin_dir }}/nomad"
+  notify: restart nomad
+
+- name: Create service group
+  group:
+    name: "{{ nomad_group }}"
+    system: true
+  when: nomad_user_managed | bool
+
+- name: Create service user
+  user:
+    name: "{{ nomad_user }}"
+    group: "{{ nomad_group }}"
+    createhome: false
+    system: true
+    shell: /bin/false
+    comment: Nomad service user
+  when: nomad_user_managed | bool
+
+- name: Create conf directory
+  file:
+    state: directory
+    path: "{{ nomad_conf_dir }}"
+    owner: "{{ nomad_conf_dir_owner }}"
+    group: "{{ nomad_group }}"
+    mode: "{{ nomad_conf_dir_mode }}"
+
+- name: Create data directory
+  file:
+    state: directory
+    path: "{{ nomad_data_dir }}"
+    owner: "{{ nomad_user }}"
+    group: "{{ nomad_group }}"
+    mode: 0750
+
+- name: Systemd unit file
+  template:
+    src: "{{ nomad_systemd_template }}"
+    dest: /etc/systemd/system/nomad.service
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - reload systemd
+    - restart nomad
+
+- name: Manage nomad service
+  service:
+    name: nomad
+    state: "{{ nomad_service_state }}"
+    enabled: "{{ nomad_service_enabled }}"
+
+- name: Hcl file for nomad
+  blockinfile:
+    path: /etc/nomad.d/nomad.hcl
+    block:
+      log_level = "DEBUG"
+
+      network_interface = "eth1"
+      name = "client2"
+
+      client {
+        enabled = true
+        servers = ["192.168.1.2:4647"]
+      }
+
+      plugin "docker" {
+        config {
+          gc {
+            dangling_containers {
+              enabled = false
+            }
+          }
+        }
+      }
+    create: yes

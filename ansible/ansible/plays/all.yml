@@ -20,3 +20,19 @@
     - 'software/docker'
     - 'software/consul'
     - 'software/nomad'
+
+- hosts: 'agent1'
+  become: true
+  any_errors_fatal: true
+  roles:
+    - 'software/dockerAgent1'
+    - 'software/consulAgent1'
+    - 'software/nomadAgent1'
+
+- hosts: 'agent2'
+  become: true
+  any_errors_fatal: true
+  roles:
+    - 'software/dockerAgent2'
+    - 'software/consulAgent2'
+    - 'software/nomadAgent2'
