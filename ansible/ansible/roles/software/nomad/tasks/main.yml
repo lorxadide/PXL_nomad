@@ -101,7 +101,8 @@
     state: "{{ nomad_service_state }}"
     enabled: "{{ nomad_service_enabled }}"
 
-- name: Hcl file for nomad
+- name: Hcl file for nomad server
+  hosts: server
   blockinfile:
     path: /etc/nomad.d/nomad.hcl
     block:
@@ -110,5 +111,50 @@
       server {
           enabled = true
           bootstrap_expect = 1
+      }
+    create: yes
+
+- name: Hcl file for consul agent
+  hosts: agent1
+  blockinfile:
+    path: /etc/nomad.d/nomad.hcl
+    block:
+      network_interface = "eth1"
+      client {
+        enabled = true
+        servers = ["192.168.1.2:4647"]
+      }
+
+      plugin "docker" {
+        config {
+          gc {
+            dangling_containers {
+              enabled = false
+            }
+          }
+        }
+      }
+    create: yes
+
+- name: Hcl file for consul agent2
+  hosts: agent2
+  blockinfile:
+    path: /etc/nomad.d/nomad.hcl
+    block:
+      network_interface = "eth1"
+      name = "client2"
+      client {
+        enabled = true
+        servers = ["192.168.1.2:4647"]
+      }
+
+      plugin "docker" {
+        config {
+          gc {
+            dangling_containers {
+              enabled = false
+            }
+          }
+        }
       }
     create: yes

@@ -85,11 +85,30 @@
     recurse: yes
   when: consul_was_downloaded|changed
 
-- name: Hcl file for consul
+- name: Hcl file for consul server
+  hosts: server
   blockinfile:
     path: /etc/consul.d/consul.hcl
     block:
-      bind_addr = \"eth1\"
+      bind_addr = "eth1"
       server = true
       bootstrap_expect = 1
+    create: yes
+
+- name: Hcl file for consul agent
+  hosts: agent1
+  blockinfile:
+    path: /etc/consul.d/consul.hcl
+    block:
+      bind_addr = "eth1"
+      retry_join = [192.168.1.2]
+    create: yes
+
+- name: Hcl file for consul agent2
+  hosts: agent2
+  blockinfile:
+    path: /etc/consul.d/consul.hcl
+    block:
+      bind_addr = "eth1"
+      retry_join = [192.168.1.2]
     create: yes
