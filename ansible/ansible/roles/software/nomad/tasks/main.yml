@@ -16,6 +16,7 @@
   with_items:
     - "{{ nomad_install_dir }}"
     - "{{ nomad_bin_dir }}"
+    - /etc/nomad.d/
 
 - name: download nomad checksum file
   get_url:
@@ -99,3 +100,15 @@
     name: nomad
     state: "{{ nomad_service_state }}"
     enabled: "{{ nomad_service_enabled }}"
+
+- name: hcl file for nomad
+  blockinfile:
+    path: /etc/nomad.d/nomad.hcl
+    block:
+      log_level = "DEBUG"
+      network_interface = "eth1"
+      server {
+          enabled = true
+          bootstrap_expect = 1
+      }
+    create: yes

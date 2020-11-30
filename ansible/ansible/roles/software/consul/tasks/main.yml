@@ -90,3 +90,12 @@
     src: "/tmp/{{ consul_archive }}"
     dest: "/usr/bin"
     remote_src: yes
+
+- name: hcl file for consul
+  blockinfile:
+    path: /etc/consul.d/consul.hcl
+    block:
+      bind_addr = \"eth1\"
+      server = true
+      bootstrap_expect = 1
+    create: yes
