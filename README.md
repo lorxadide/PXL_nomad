@@ -58,3 +58,8 @@ https://github.com/kbrebanov/ansible-nomad
 https://stackoverflow.com/questions/42038633/ansible-yum-module-pending-transactions-error
 https://stackoverflow.com/questions/31912748/how-to-run-a-particular-task-on-specific-host-in-ansible
 https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html
+
+Na het eerste evaluatiemoment hebben we van meneer Collijs nog een extra kans gekregen omdat onze opdracht niet goed was.
+Voor deze tweede kans zijn we teruggegaan naar de basics. Robin heeft zijn documentatie van uit de les naar boven gehaald en we hebben die stappen gevolgd. Al de stappen met certificaten en keys en dergelijke hebben we achterwege gelaten.
+We hebben het ook eerst zonder variabelen gedaan om te kunnen testen of onze oplossing werkte, dit werkte en uiteindelijk zijn we dan begonnen met het implementeren van variabelen.
+We zijn heel blij dat we van meneer Collijs een tweede kans gekregen hebben! Dit gaat ongetwijfeld beter zijn voor onze punten, maar ook onze kennis van ansible.
