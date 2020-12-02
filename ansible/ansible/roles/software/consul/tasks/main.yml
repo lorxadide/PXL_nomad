@@ -1,22 +1,22 @@
 ---
 - name: add repo
-  command: yum-config-manager --add-repo=https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+  command: "yum-config-manager --add-repo={{ consul__repo_url }}"
 
 - name: install consul
   yum:
     name: consul
-    state: installed
+    state: "{{ consul__installed_state }}"
   
 - name: add consul script
   template:
     src: consul.sh.j2
-    dest: /etc/consul.d/consul.hcl
+    dest: "{{ consul__script_destination }}"
     owner: "consul"
     group: "consul"
-    mode: u=rwx,g=r,o=r
+    mode: "{{ consul__mode_for_template }}"
   
 - name: Enable service consul
   service:
     name: consul
-    enabled: yes
+    enabled: "{{consul__service_enabled_state }}"
   notify: restart consul

@@ -1,1 +1,4 @@
 ---
+docker__repo_url: "https://download.docker.com/linux/centos/docker-ce.repo"
+docker__installed_state: "installed"
+docker__service_enabled_state: "yes"
