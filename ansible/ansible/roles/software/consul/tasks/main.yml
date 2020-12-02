@@ -7,6 +7,14 @@
     name: consul
     state: installed
   
+- name: add consul script
+  template:
+    src: consul.sh.j2
+    dest: /etc/consul.d/consul.hcl
+    owner: "consul"
+    group: "consul"
+    mode: u=rwx,g=r,o=r
+  
 - name: Enable service consul
   service:
     name: consul
