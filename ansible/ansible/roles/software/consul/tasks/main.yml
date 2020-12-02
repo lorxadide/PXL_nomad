@@ -1,114 +1,14 @@
 ---
-- name: Ensure supporting OS packages are installed
+- name: add repo
+  command: yum-config-manager --add-repo=https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+
+- name: install consul
   yum:
-    name: "{{ item }}"
+    name: consul
     state: installed
-  with_items:
-    - bind-utils
-    - unzip
-
-- name: Create consul group
-  group:
-    name: "{{ consul_group }}"
-    state: present
-
-- name: Create consul user
-  user:
-    name: "{{ consul_user }}"
-    group: "{{ consul_group }}"
-    system: yes
-
-- name: Create consul directory
-  file:
-    state: directory
-    path: "{{ item }}"
-    owner: "{{ consul_user }}"
-    group: "{{ consul_group }}"
-  with_items:
-    - "{{ consul_home }}"
-    - "{{ consul_home }}/bin"
-    - "{{ consul_home }}/cert"
-    - "{{ consul_data_dir }}"
-    - "{{ consul_config_dir }}"
-
-- name: Download consul
-  get_url:
-    url: "{{ consul_download }}"
-    dest: "{{ consul_download_folder }}"
-  register: consul_was_downloaded
-
-- name: Copy and unpack
-  unarchive:
-    src: "{{ consul_download_folder }}/{{ consul_archive }}"
-    dest: "/usr/bin"
-    copy: no
-  when: consul_was_downloaded|changed
-  notify:
-    - Restart consul
-
-- name: Create TLS key
-  no_log: true
-  copy:
-    content: "{{ consul_tls_key }}"
-    dest: "{{ consul_key_file }}"
-    owner: "{{ consul_user }}"
-    group: "{{ consul_group }}"
-    mode: 0600
-  when: consul_tls_key is defined
-
-- name: Create TLS cert
-  no_log: true
-  copy:
-    content: "{{ consul_tls_cert }}"
-    dest: "{{ consul_cert_file }}"
-    owner: "{{ consul_user }}"
-    group: "{{ consul_group }}"
-    mode: 0600
-  when: consul_tls_cert is defined
-
-- name: Create TLS root CA cert
-  no_log: true
-  copy:
-    content: "{{ consul_tls_ca_cert }}"
-    dest: "{{ consul_ca_file }}"
-    owner: "{{ consul_user }}"
-    group: "{{ consul_group }}"
-    mode: 0600
-  when: consul_tls_ca_cert is defined
-
-- name: Set ownership
-  file:
-    state: directory
-    path: "{{ consul_home }}"
-    owner: "{{ consul_user }}"
-    group: "{{ consul_group }}"
-    recurse: yes
-  when: consul_was_downloaded|changed
-
-- name: Hcl file for consul server
-  hosts: server
-  blockinfile:
-    path: /etc/consul.d/consul.hcl
-    block:
-      bind_addr = "eth1"
-      server = true
-      bootstrap_expect = 1
-    create: yes
-
-- name: Hcl file for consul agent
-  hosts: agent1
-  blockinfile:
-    path: /etc/consul.d/consul.hcl
-    block:
-      bind_addr = "eth1"
-      retry_join = [192.168.1.2]
-    create: yes
-
-- name: Hcl file for consul agent2
-  hosts: agent2
-  blockinfile:
-    path: /etc/consul.d/consul.hcl
-    block:
-      bind_addr = "eth1"
-      retry_join = [192.168.1.2]
-    create: yes
+  
+- name: Enable service consul
+  service:
+    name: consul
+    enabled: yes
+  notify: restart consul
