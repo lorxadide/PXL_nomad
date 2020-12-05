@@ -1,6 +1,1 @@
 ---
-consul__script_destination: "/etc/consul.d/consul.hcl"
-consul__mode_for_template: "u=rwx,g=r,o=r"
-consul__service_enabled_state: "yes"
-consul__installed_state: "installed"
-consul__repo_url: "https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo"

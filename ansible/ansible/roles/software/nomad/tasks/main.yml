@@ -1,22 +1,23 @@
 ---
 - name: add repo
-  command: "yum-config-manager --add-repo={{ nomad__repo_url }}"
+  command: yum-config-manager --add-repo=https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
     
 - name: install nomad
   yum:
     name: nomad
-    state: "{{ nomad__installed_state }}"
+    state: installed
   
 - name: add nomad script
   template:
     src: nomad.sh.j2
-    dest: "{{ nomad__script_destination }}"
+    dest: /etc/nomad.d/nomad.hcl
     owner: "root"
     group: "root"
-    mode: "{{ nomad__template_mode }}"
+    mode: u=rwx,g=r,o=r
+  notify: restart nomad
   
 - name: Enable service nomad
   service:
     name: nomad
-    enabled: "{{ nomad__service_enabled_mode }}"
+    enabled: yes
   notify: restart nomad

@@ -1,6 +1,2 @@
 ---
-nomad__repo_url: "https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo"
-nomad__installed_state: "installed"
-nomad__template_mode: "u=rwx,g=r,o=r"
-nomad__service_enabled_mode: "yes"
-nomad__script_destination: "/etc/nomad.d/nomad.hcl"
+crond__content: "HELLO"
