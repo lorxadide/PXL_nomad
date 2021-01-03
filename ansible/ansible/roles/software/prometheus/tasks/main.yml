@@ -1,0 +1,17 @@
+---
+- name: dir for prometheus.yml
+  file:
+    path: /opt/prometheus
+    state: directory
+    mode: u=rwx,g=r,o=r
+
+- name: template prometheus.yml
+  template: 
+    src: prometheus.sh.j2
+    dest: /opt/prometheus/prometheus.yml
+
+- name: nomad job prometheus
+  template: 
+    src: prometheusjob.sh.j2
+    dest: /opt/nomad/prometheus.nomad
+  notify: start prometheus job
