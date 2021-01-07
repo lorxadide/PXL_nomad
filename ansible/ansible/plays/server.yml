@@ -11,3 +11,4 @@
     - role: software/prometheus
     - role: software/grafana
     - role: software/alertmanager
+    - role: software/cadvisor
