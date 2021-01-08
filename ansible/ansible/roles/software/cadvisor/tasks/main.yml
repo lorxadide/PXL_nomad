@@ -1,5 +1,5 @@
 ---
-- name: nomad job cadvisor 
+- name: Add the nomad job for cadvisor 
   template: 
     src: cadvisor.sh.j2
     dest: /opt/nomad/cadvisor.nomad

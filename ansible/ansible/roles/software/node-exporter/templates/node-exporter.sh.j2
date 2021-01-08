@@ -1,35 +1,36 @@
-job "cadvisor" {
+job "node-exporter" {
   datacenters = ["dc1"]
   type = "service"
 
-  group "cadvisor" {
+  group "node-exporter" {
+    count = 3
 
-    task "cadvisor" {
+    task "node-exporter" {
       driver = "docker"
 
       config {
-        image = "google/cadvisor"
+        image = "prom/node-exporter"
         force_pull = true
         port_map {
-          cadvisor_ui = 8080
+          node-exporter_ui = 9100
         }
         logging {
           type = "journald"
           config {
-            tag = "CADVISOR"
+            tag = "NODE-EXPORTER"
           }
         }
       }
 
       service {
-        name = "cadvisor"
-        port = "cadvisor_ui"
+        name = "node-exporter"
+        port = "node-exporter_ui"
       }
 
       resources {
         network {
-          port "cadvisor_ui" {
-		    static = "8080" 
+          port "node-exporter_ui" { 
+		    static = "9100"
 		  }
         }
       }

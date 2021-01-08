@@ -6,8 +6,8 @@ scrape_configs:
     target_groups:
       - targets: ['127.0.0.1:9090']
 
-  # Node exporter
-  - job_name: 'node_exporters'
+  # Node exporters
+  - job_name: 'node-exporters'
     scrape_interval: 5s
     target_groups:
       - targets: ['192.168.1.2:9100']
@@ -26,5 +26,9 @@ scrape_configs:
     target_groups:
       - targets: ['192.168.1.3:2200']
 	  - targets: ['192.168.1.4:2201']
-
-# Alleen de extra app moet nog als target erbij
+	  
+  # Cadvisor
+  - job_name: 'cadvisor'
+    scrape_interval: 5s
+    target_groups:
+      - targets: ['192.168.1.3:8080']
