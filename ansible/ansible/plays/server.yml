@@ -8,7 +8,6 @@
     - role: software/docker
     - role: software/nomad
     - role: software/node-exporter
-    - role: software/prometheus
     - role: software/grafana
     - role: software/alertmanager
     - role: software/cadvisor

@@ -3,7 +3,7 @@ job "node-exporter" {
   type = "service"
 
   group "node-exporter" {
-    count = 3
+    count = 2
 
     task "node-exporter" {
       driver = "docker"
