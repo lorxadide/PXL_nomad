@@ -2,19 +2,8 @@ job "prometheus" {
   datacenters = ["dc1"]
   type        = "service"
 
-  group "monitoring" {
+  group "prometheus" {
     count = 1
-
-    restart {
-      attempts = 2
-      interval = "30m"
-      delay    = "15s"
-      mode     = "fail"
-    }
-
-    ephemeral_disk {
-      size = 300
-    }
 
     task "prometheus" {
       template {
@@ -78,9 +67,9 @@ scrape_configs:
     params:
       format: ['prometheus']
 
-  - job_name: 'node_exporter'
+  - job_name: 'node-exporter'
     static_configs:
-    - targets: ['192.168.1.3:9100']
+    - targets: ['192.168.1.3:9100','192.168.1.4:9100']
   
   - job_name: 'cadvisor'
 

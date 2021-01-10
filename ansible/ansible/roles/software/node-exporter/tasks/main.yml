@@ -1,6 +1,0 @@
----
-- name: Add the nomad job for node exporter 
-  template: 
-    src: node-exporter.sh.j2
-    dest: /opt/nomad/node-exporter.nomad
-  notify: start node-exporter job

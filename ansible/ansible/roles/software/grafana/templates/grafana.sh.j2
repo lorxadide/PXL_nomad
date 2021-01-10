@@ -11,7 +11,7 @@ job "grafana" {
         image = "grafana/grafana"
 		force_pull = true
 		port_map = {
-		  grafana_web = 3000
+		  grafana_ui = 3000
 		} 
 		logging {
 		  type = "journald"
@@ -23,12 +23,12 @@ job "grafana" {
 	  
 	  service {
 	    name = "grafana"
-	    port = "grafana_web"
+	    port = "grafana_ui"
 	  } 
 
       resources {
         network {
-          port "grafana_web" {
+          port "grafana_ui" {
             static = "3000"
           }
         }
