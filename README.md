@@ -63,3 +63,18 @@ Na het eerste evaluatiemoment hebben we van meneer Collijs nog een extra kans ge
 Voor deze tweede kans zijn we teruggegaan naar de basics. Robin heeft zijn documentatie van uit de les naar boven gehaald en we hebben die stappen gevolgd. Al de stappen met certificaten en keys en dergelijke hebben we achterwege gelaten.
 We hebben het ook eerst zonder variabelen gedaan om te kunnen testen of onze oplossing werkte, dit werkte en uiteindelijk zijn we dan begonnen met het implementeren van variabelen.
 We zijn heel blij dat we van meneer Collijs een tweede kans gekregen hebben! Dit gaat ongetwijfeld beter zijn voor onze punten, maar ook onze kennis van ansible.
+
+
+Opdracht 3:
+Voor deze derde opdracht waren we vastberaden om het beter te doen dan de afgelopen twee PE's, wat naar ons gevoel ook wel gelukt is.
+Het provisionen heeft ons vaak voor problemen gezorgd, omdat het internet "opzoog" en daardoor vaak het hele internet wegviel. Wat dan voor een fout zorgde tijdens het provisionen.
+We hebben eigenlijk samengewerkt via het delen van een scherm en dan zo op één scherm werken, wij vonden dat we op deze manier toch nog het meeste konden samenwerken.
+Naar ons buikgevoel is deze PE goed verlopen. De nodige tegenslagen zijn er ook geweest waar we meneer Collijs zijn inbox vol hebben gestuurd met berichten, maar hij heeft ons altijd even hard geholpen waarvoor dank.
+
+Bronvermelding:
+https://github.com/visibilityspots/nomad-consul-prometheus
+https://github.com/google/cadvisor
+https://grafana.com/docs/grafana/latest/installation/
+https://grafana.com/grafana/dashboards
+https://prometheus.io/docs/alerting/latest/alertmanager/
+https://github.com/prometheus/node_exporter
