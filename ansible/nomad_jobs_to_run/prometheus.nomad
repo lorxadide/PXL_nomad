@@ -1,9 +1,12 @@
 job "prometheus" {
   datacenters = ["dc1"]
   type        = "service"
+  #type		   = "system"
+  #regel erboven alleen geldig bij meerdere docker daemons
 
   group "prometheus" {
     count = 1
+	#count verwijderen indien er meerdere docker daemons zijn
 
     task "prometheus" {
       template {
