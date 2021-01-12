@@ -1,9 +1,8 @@
 job "node_exporter" {
     datacenters = ["dc1"]
-    type        = "service"
+    type        = "system"
 
     group "node-exporter" {
-        count = 2
   	    network {
   		    port "node-exporter_ui" {
     	        to = 9100
